@@ -1,0 +1,887 @@
+/* ============================================================
+   ORDENIA IA — hoja de estilos base
+   Paleta: azul + blanco + acentos vivos. Responsive: PC/tablet/celular.
+   ============================================================ */
+
+:root {
+  /* ---- Grises (10 tonos, base para la mayoría de la interfaz) ---- */
+  --gris-50: #f8fafc;
+  --gris-100: #f1f5f9;
+  --gris-200: #e2e8f0;
+  --gris-300: #cbd5e1;
+  --gris-400: #94a3b8;
+  --gris-500: #64748b;
+  --gris-600: #475569;
+  --gris-700: #334155;
+  --gris-800: #1e293b;
+  --gris-900: #0f172a;
+
+  /* ---- Azul primario (10 tonos) ---- */
+  --azul-50: #eff6ff;
+  --azul-100: #dbeafe;
+  --azul-200: #bfdbfe;
+  --azul-300: #93c5fd;
+  --azul-400: #60a5fa;
+  --azul-500: #3b82f6;
+  --azul-600: #2563eb;
+  --azul-700: #1d4ed8;
+  --azul-800: #1e40af;
+  --azul-900: #172554;
+
+  /* ---- Acentos semánticos (6-7 tonos cada uno) ---- */
+  --verde-50: #f0fdf4;
+  --verde-100: #dcfce7;
+  --verde-300: #86efac;
+  --verde-500: #22c55e;
+  --verde-600: #16a34a;
+  --verde-700: #15803d;
+  --verde-800: #166534;
+
+  --rojo-50: #fef2f2;
+  --rojo-100: #fee2e2;
+  --rojo-300: #fca5a5;
+  --rojo-500: #ef4444;
+  --rojo-600: #dc2626;
+  --rojo-700: #b91c1c;
+  --rojo-800: #991b1b;
+
+  --ambar-50: #fffbeb;
+  --ambar-100: #fef3c7;
+  --ambar-300: #fcd34d;
+  --ambar-500: #f59e0b;
+  --ambar-600: #d97706;
+  --ambar-700: #b45309;
+  --ambar-800: #92400e;
+
+  --morado-50: #f5f3ff;
+  --morado-100: #ede9fe;
+  --morado-300: #c4b5fd;
+  --morado-500: #8b5cf6;
+  --morado-600: #7c3aed;
+  --morado-700: #6d28d9;
+  --morado-800: #5b21b6;
+
+  --blanco: #ffffff;
+
+  /* Alias de compatibilidad con nombres usados en el resto del archivo. */
+  --verde: var(--verde-600);
+  --rojo: var(--rojo-600);
+  --amarillo: var(--ambar-500);
+  --morado: var(--morado-600);
+
+  --radio-sm: 8px;
+  --radio-md: 14px;
+  --radio-lg: 22px;
+
+  --espacio-1: 8px;
+  --espacio-2: 16px;
+  --espacio-3: 24px;
+  --espacio-4: 32px;
+
+  --sombra-card: 0 1px 2px rgba(15, 37, 87, .06), 0 8px 24px rgba(15, 37, 87, .08);
+  --sombra-card-hover: 0 4px 10px rgba(15, 37, 87, .1), 0 14px 32px rgba(15, 37, 87, .14);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--gris-100);
+  color: var(--gris-700);
+  font-family: "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+
+/* Cada carga de página (no hay SPA aquí) entra con un fundido suave en
+   vez de aparecer de golpe — sensación de "transición" sin JS. */
+main {
+  animation: contenido-entrar 280ms var(--ease-out) backwards;
+}
+
+@keyframes contenido-entrar {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: var(--espacio-3);
+}
+
+/* ---------------------------------------------------------- */
+/* Barra superior                                              */
+/* ---------------------------------------------------------- */
+.barra-superior {
+  background: linear-gradient(135deg, var(--azul-800), var(--azul-600));
+  color: var(--blanco);
+  padding: var(--espacio-2) 0;
+}
+
+.barra-superior .contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2);
+  flex-wrap: wrap;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: .2px;
+}
+
+.marca .numero-marca {
+  background: var(--blanco);
+  color: var(--azul-700);
+  border-radius: var(--radio-sm);
+  padding: 2px 8px;
+  font-size: .95rem;
+}
+
+.usuario-actual {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  font-size: .9rem;
+}
+
+.badge-rol {
+  background: rgba(255,255,255,.18);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+/* ---------------------------------------------------------- */
+/* Botones                                                      */
+/* ---------------------------------------------------------- */
+/*
+  Seis estados por botón (reposo, hover, active, focus, disabled,
+  loading), derivados de la misma escala de color en vez de elegirse
+  a mano: reposo = tono 600, hover = 700, active = 800. Así cada
+  variante (primario/éxito/peligro) queda visualmente coherente.
+*/
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--radio-md);
+  padding: 12px 22px;
+  font-size: .95rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--azul-600);
+  color: var(--blanco);
+  transition: background-color 120ms var(--ease-out), border-color 120ms var(--ease-out), transform 80ms var(--ease-out), box-shadow 120ms var(--ease-out);
+}
+
+.btn:active { background: var(--azul-800); transform: scale(0.97); }
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { background: var(--azul-700); }
+  .btn-secundario:hover { background: var(--azul-50); border-color: var(--azul-300); }
+  .btn-secundario:active { background: var(--azul-100); }
+  .btn-exito:hover { background: var(--verde-700); }
+  .btn-exito:active { background: var(--verde-800); }
+  .btn-peligro:hover { background: var(--rojo-700); }
+  .btn-peligro:active { background: var(--rojo-800); }
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--azul-500);
+  outline-offset: 3px;
+}
+
+.btn-secundario {
+  background: var(--blanco);
+  color: var(--azul-700);
+  border: 1px solid var(--azul-100);
+}
+
+.btn-exito { background: var(--verde-600); }
+.btn-exito:focus-visible { outline-color: var(--verde-600); }
+.btn-peligro { background: var(--rojo-600); }
+.btn-peligro:focus-visible { outline-color: var(--rojo-600); }
+.btn-bloque { width: 100%; }
+
+.btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+}
+
+/* Estado de carga: para acciones asíncronas (ej. "Generar ejercicios"
+   mientras espera la respuesta del servidor). Se activa/desactiva por
+   JS agregando/quitando esta clase; el ancho no cambia para evitar
+   saltos de layout. */
+.btn.btn--loading {
+  opacity: .7;
+  cursor: wait;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------- */
+/* Tarjetas / layout general                                    */
+/* ---------------------------------------------------------- */
+.tarjeta {
+  background: var(--blanco);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-card);
+  padding: var(--espacio-3);
+  transition: box-shadow 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tarjeta:hover { box-shadow: var(--sombra-card-hover); transform: translateY(-2px); }
+}
+
+.rejilla-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--espacio-2);
+  margin-block: var(--espacio-3);
+}
+
+@media (max-width: 900px) {
+  .rejilla-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .rejilla-stats { grid-template-columns: 1fr; }
+}
+
+.stat {
+  background: var(--blanco);
+  border-radius: var(--radio-md);
+  box-shadow: var(--sombra-card);
+  padding: var(--espacio-2);
+  transition: box-shadow 160ms var(--ease-out), transform 160ms var(--ease-out);
+  animation: tarjeta-entrar 320ms var(--ease-out) backwards;
+}
+
+/* Aparición escalonada: cada tarjeta entra un poco después que la
+   anterior (60ms de diferencia) para que no aparezcan todas de golpe. */
+.rejilla-stats .stat:nth-child(1) { animation-delay: 0ms; }
+.rejilla-stats .stat:nth-child(2) { animation-delay: 60ms; }
+.rejilla-stats .stat:nth-child(3) { animation-delay: 120ms; }
+.rejilla-stats .stat:nth-child(4) { animation-delay: 180ms; }
+.rejilla-stats .stat:nth-child(5) { animation-delay: 240ms; }
+.rejilla-stats .stat:nth-child(6) { animation-delay: 300ms; }
+
+@keyframes tarjeta-entrar {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stat:hover { box-shadow: var(--sombra-card-hover); transform: translateY(-2px); }
+}
+
+.stat .valor { font-size: 1.7rem; font-weight: 800; color: var(--azul-700); }
+.stat .etiqueta { font-size: .8rem; color: var(--gris-500); text-transform: uppercase; letter-spacing: .4px; }
+
+.layout-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--espacio-3);
+  align-items: start;
+  padding-block: var(--espacio-3);
+}
+
+@media (max-width: 980px) {
+  .layout-panel { grid-template-columns: 1fr; }
+}
+
+.seccion-titulo {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--azul-800);
+  margin: 0 0 var(--espacio-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+table.tabla-ordenia {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+
+table.tabla-ordenia th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--azul-50);
+  color: var(--azul-800);
+  font-weight: 700;
+  position: sticky;
+  top: 0;
+}
+
+table.tabla-ordenia td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--gris-300);
+}
+
+table.tabla-ordenia tbody tr {
+  transition: background-color 120ms var(--ease-out);
+  animation: fila-entrar 220ms var(--ease-out) backwards;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  table.tabla-ordenia tbody tr:hover { background: var(--azul-50); }
+}
+
+/* Aparición escalonada de las primeras filas (30ms entre cada una);
+   de la fila 11 en adelante entran juntas para no acumular una espera
+   larga en tablas con muchos alumnos. */
+table.tabla-ordenia tbody tr:nth-child(n+11) { animation-delay: 300ms; }
+table.tabla-ordenia tbody tr:nth-child(1) { animation-delay: 0ms; }
+table.tabla-ordenia tbody tr:nth-child(2) { animation-delay: 30ms; }
+table.tabla-ordenia tbody tr:nth-child(3) { animation-delay: 60ms; }
+table.tabla-ordenia tbody tr:nth-child(4) { animation-delay: 90ms; }
+table.tabla-ordenia tbody tr:nth-child(5) { animation-delay: 120ms; }
+table.tabla-ordenia tbody tr:nth-child(6) { animation-delay: 150ms; }
+table.tabla-ordenia tbody tr:nth-child(7) { animation-delay: 180ms; }
+table.tabla-ordenia tbody tr:nth-child(8) { animation-delay: 210ms; }
+table.tabla-ordenia tbody tr:nth-child(9) { animation-delay: 240ms; }
+table.tabla-ordenia tbody tr:nth-child(10) { animation-delay: 270ms; }
+
+@keyframes fila-entrar {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tabla-scroll { overflow-x: auto; }
+
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: .75rem;
+  font-weight: 700;
+}
+.pill-verde { background: #dcfce7; color: #15803d; }
+.pill-amarillo { background: #fef3c7; color: #92400e; }
+.pill-rojo { background: #fee2e2; color: #b91c1c; }
+
+.form-grupo { margin-bottom: var(--espacio-2); }
+.form-grupo label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: 6px; color: var(--gris-700); }
+.form-grupo input, .form-grupo select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radio-sm);
+  border: 1px solid var(--gris-300);
+  font-size: .95rem;
+}
+.form-grupo input:focus, .form-grupo select:focus {
+  outline: none;
+  border-color: var(--azul-500);
+  box-shadow: 0 0 0 3px var(--azul-100);
+}
+
+/* Buscador de alumnos en vivo (ver buscador-alumno.js) — escala a
+   miles de alumnos porque nunca lista todos a la vez, solo los
+   resultados que coinciden con lo escrito. */
+.buscador-alumno { position: relative; }
+
+.buscador-alumno-resultados {
+  display: none;
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  background: var(--blanco);
+  border: 1px solid var(--gris-300);
+  border-radius: var(--radio-sm);
+  box-shadow: var(--sombra-card-hover);
+}
+
+.buscador-alumno-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: .9rem;
+  color: var(--gris-700);
+  transition: background-color 100ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .buscador-alumno-item:hover { background: var(--azul-50); }
+}
+
+.buscador-alumno-vacio {
+  padding: 9px 12px;
+  font-size: .85rem;
+  color: var(--gris-500);
+}
+
+/* ---------------------------------------------------------- */
+/* Paginación                                                   */
+/* ---------------------------------------------------------- */
+.paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: var(--espacio-2);
+}
+
+.paginacion a, .paginacion span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  border-radius: var(--radio-sm);
+  font-size: .85rem;
+  text-decoration: none;
+  color: var(--azul-700);
+}
+
+.paginacion a {
+  border: 1px solid var(--gris-300);
+  transition: background-color 100ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .paginacion a:hover { background: var(--azul-50); }
+}
+
+.paginacion .activa {
+  background: var(--azul-600);
+  color: var(--blanco);
+  font-weight: 700;
+}
+
+.paginacion .deshabilitada {
+  color: var(--gris-400);
+}
+
+.error-form { color: var(--rojo); font-size: .8rem; margin-top: 4px; }
+
+/* ---------------------------------------------------------- */
+/* Modal de confirmación (ver public/assets/js/confirmar.js)   */
+/* ---------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espacio-2);
+  background: rgba(15, 23, 42, 0);
+  transition: background-color 180ms var(--ease-out);
+}
+
+.modal-overlay[hidden] { display: none; }
+
+.modal-overlay.visible {
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.modal-caja {
+  background: var(--blanco);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-card-hover);
+  padding: var(--espacio-3);
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform 200ms var(--ease-out), opacity 200ms var(--ease-out);
+}
+
+.modal-overlay.visible .modal-caja {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.modal-icono { font-size: 2.2rem; margin-bottom: 8px; }
+
+.modal-mensaje {
+  color: var(--gris-700);
+  font-size: .95rem;
+  margin: 0 0 var(--espacio-3);
+}
+
+.modal-acciones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.modal-acciones .btn { flex: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay, .modal-caja { transition-duration: 1ms; }
+  .modal-caja { transform: none; }
+}
+
+/* ============================================================
+   VERRITY — personaje mascota (redondo, azul, original)
+   ============================================================ */
+.verrity-widget {
+  background: linear-gradient(180deg, var(--azul-50), var(--blanco));
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-card);
+  padding: var(--espacio-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  position: sticky;
+  top: var(--espacio-2);
+}
+
+.verrity-cabecera { display: flex; align-items: center; gap: 12px; }
+
+.verrity-personaje {
+  width: 84px;
+  height: 84px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.verrity-cuerpo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #7db8ff, var(--azul-600) 70%);
+  box-shadow: inset 0 -6px 10px rgba(15, 37, 87, .25), 0 6px 14px rgba(37, 99, 235, .35);
+  position: relative;
+  animation: verrity-flotar 3.2s var(--ease-in-out) infinite;
+  transform-origin: center;
+}
+
+.verrity-ojos { position: absolute; top: 34%; left: 50%; transform: translateX(-50%); display: flex; gap: 16px; }
+.ojo {
+  width: 12px; height: 14px; background: #0b1e42; border-radius: 50%;
+  animation: verrity-parpadeo 4.5s ease-in-out infinite;
+}
+.verrity-boca {
+  position: absolute; bottom: 26%; left: 50%; transform: translateX(-50%);
+  width: 26px; height: 10px; border-radius: 0 0 14px 14px; background: #0b1e42;
+}
+
+.verrity-nombre { font-weight: 800; color: var(--azul-800); }
+.verrity-estado { font-size: .78rem; color: var(--gris-500); }
+
+.verrity-burbuja {
+  background: var(--blanco);
+  border: 1px solid var(--azul-100);
+  border-radius: var(--radio-md);
+  padding: 12px 14px;
+  font-size: .9rem;
+  min-height: 46px;
+  animation: burbuja-entrar 220ms var(--ease-out);
+}
+
+@keyframes burbuja-entrar {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes verrity-flotar {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.01); }
+}
+
+@keyframes verrity-parpadeo {
+  0%, 92%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.1); }
+}
+
+/* Estados de Verrity */
+.verrity-cuerpo.pensando { animation: verrity-pensar 1.1s var(--ease-in-out) infinite; }
+@keyframes verrity-pensar {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+.verrity-cuerpo.hablando .verrity-boca { animation: verrity-hablar 380ms ease-in-out infinite; }
+@keyframes verrity-hablar {
+  0%, 100% { height: 8px; }
+  50% { height: 16px; }
+}
+
+.verrity-cuerpo.feliz { animation: verrity-feliz 550ms var(--ease-out); }
+@keyframes verrity-feliz {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12) translateY(-6px); }
+  100% { transform: scale(1); }
+}
+
+.verrity-cuerpo.sorprendido { animation: verrity-sorpresa 420ms var(--ease-out); }
+@keyframes verrity-sorpresa {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.verrity-cuerpo.error { animation: verrity-error 420ms var(--ease-in-out); }
+@keyframes verrity-error {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.verrity-cuerpo.celebrando { animation: verrity-celebrar 900ms var(--ease-out); }
+@keyframes verrity-celebrar {
+  0% { transform: scale(1) rotate(0); }
+  30% { transform: scale(1.2) rotate(-8deg); }
+  60% { transform: scale(1.1) rotate(8deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.verrity-cuerpo.generando { animation: verrity-generar 1.4s linear infinite; }
+@keyframes verrity-generar {
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(25deg) brightness(1.15); }
+  100% { filter: hue-rotate(0deg) brightness(1); }
+}
+
+.verrity-cuerpo.esperando { animation: verrity-esperar 2.4s ease-in-out infinite; opacity: .92; }
+@keyframes verrity-esperar {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.97); }
+}
+
+/* "¡Chócala!" — pequeño choque de manos al terminar una tarea con éxito. */
+.verrity-cuerpo.saludando { animation: verrity-saludar 650ms var(--ease-out); }
+@keyframes verrity-saludar {
+  0% { transform: translateX(0) rotate(0); }
+  25% { transform: translateX(-5px) rotate(-6deg); }
+  55% { transform: translateX(5px) rotate(6deg) scale(1.06); }
+  80% { transform: translateX(-2px) rotate(-2deg); }
+  100% { transform: translateX(0) rotate(0); }
+}
+
+.verrity-cuerpo.saludando::after {
+  content: '🙌';
+  position: absolute;
+  top: -12px;
+  right: -16px;
+  font-size: 1.5rem;
+  animation: verrity-mano 650ms var(--ease-out);
+}
+
+@keyframes verrity-mano {
+  0% { opacity: 0; transform: scale(0.5) translateY(8px) rotate(-15deg); }
+  45% { opacity: 1; transform: scale(1.2) translateY(-3px) rotate(8deg); }
+  100% { opacity: 0; transform: scale(1) translateY(0) rotate(0); }
+}
+
+/* Guiño ocasional: variedad sutil para los momentos de "vida propia"
+   entre acciones (ver el temporizador de inactividad en verrity.js). */
+.verrity-cuerpo.guino .verrity-ojos .ojo:last-child { animation: verrity-guino 420ms ease-in-out; }
+@keyframes verrity-guino {
+  0%, 100% { transform: scaleY(1); }
+  40%, 70% { transform: scaleY(0.15); }
+}
+
+.verrity-cuerpo.aparecer { animation: verrity-aparecer 420ms var(--ease-out); }
+@keyframes verrity-aparecer {
+  from { opacity: 0; transform: scale(0.9) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .verrity-cuerpo, .verrity-cuerpo.pensando, .verrity-cuerpo.feliz, .verrity-cuerpo.sorprendido,
+  .verrity-cuerpo.error, .verrity-cuerpo.celebrando, .verrity-cuerpo.generando, .verrity-cuerpo.esperando,
+  .verrity-cuerpo.aparecer, .verrity-cuerpo.saludando, .verrity-cuerpo.guino, .ojo, .verrity-boca {
+    animation: none !important;
+  }
+
+  .verrity-cuerpo.saludando::after {
+    content: none;
+  }
+
+  /* Se mantiene la aparición del contenido (opacidad), pero sin el
+     desplazamiento ni el escalonado — "menos y más suave", no cero. */
+  .stat, table.tabla-ordenia tbody tr, main {
+    animation: ninguna-con-opacidad 1ms linear !important;
+    animation-delay: 0ms !important;
+  }
+
+  .tarjeta:hover, .stat:hover {
+    transform: none;
+  }
+}
+
+@keyframes ninguna-con-opacidad {
+  from { opacity: 1; }
+  to { opacity: 1; }
+}
+
+.verrity-chat-input { display: flex; gap: 8px; }
+.verrity-chat-input input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: var(--radio-sm);
+  border: 1px solid var(--gris-300);
+}
+
+.verrity-acciones { display: flex; gap: 8px; flex-wrap: wrap; }
+.verrity-acciones .btn { flex: 1; min-width: 130px; padding: 10px 14px; font-size: .85rem; }
+
+.verrity-log { display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; }
+.verrity-log .mensaje-profesor { align-self: flex-end; background: var(--azul-600); color: var(--blanco); border-radius: var(--radio-md); padding: 8px 12px; font-size: .85rem; max-width: 85%; }
+.verrity-log .mensaje-verrity { align-self: flex-start; background: var(--azul-50); border-radius: var(--radio-md); padding: 8px 12px; font-size: .85rem; max-width: 85%; }
+
+/* ============================================================
+   JUEGO — ordenar números
+   ============================================================ */
+.juego-tablero {
+  text-align: center;
+  padding: var(--espacio-4) var(--espacio-2);
+}
+
+.juego-instruccion {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--azul-800);
+  margin-bottom: var(--espacio-3);
+}
+
+.temporizador {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 5px solid var(--azul-100);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--azul-700);
+  margin-bottom: var(--espacio-3);
+  transition: border-color 240ms var(--ease-out), color 240ms var(--ease-out);
+}
+
+.temporizador.urgente {
+  border-color: var(--rojo);
+  color: var(--rojo);
+  animation: temporizador-pulso 1s ease-in-out infinite;
+}
+
+@keyframes temporizador-pulso {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.zona-fichas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  min-height: 90px;
+  padding: var(--espacio-2);
+  border: 2px dashed var(--gris-300);
+  border-radius: var(--radio-lg);
+  margin-bottom: var(--espacio-3);
+  background: var(--blanco);
+}
+
+.ficha-numero {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--azul-800);
+  background: var(--blanco);
+  border: 2px solid var(--azul-200, var(--azul-100));
+  border-radius: var(--radio-md);
+  cursor: grab;
+  user-select: none;
+  box-shadow: var(--sombra-card);
+  transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out), opacity 160ms var(--ease-out);
+}
+
+.ficha-numero:active { cursor: grabbing; }
+.ficha-numero.arrastrando { opacity: .35; }
+.ficha-numero.sobre-objetivo { transform: scale(1.05); box-shadow: 0 10px 22px rgba(37,99,235,.28); }
+
+@media (hover: hover) and (pointer: fine) {
+  .ficha-numero:hover { transform: translateY(-3px); }
+}
+
+.resultado-mensaje {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-top: var(--espacio-2);
+  min-height: 32px;
+}
+.resultado-mensaje.correcto { color: var(--verde); }
+.resultado-mensaje.incorrecto { color: var(--rojo); }
+
+.confeti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 60;
+}
+.confeti span {
+  position: absolute;
+  top: -10px;
+  width: 8px; height: 14px;
+  animation: caer 1.4s var(--ease-in-out) forwards;
+}
+@keyframes caer {
+  to { transform: translateY(105vh) rotate(360deg); opacity: .2; }
+}
+
+@media (max-width: 600px) {
+  .ficha-numero { width: 58px; height: 58px; font-size: 1.05rem; }
+  .juego-instruccion { font-size: 1.05rem; }
+}
+
+/* ============================================================
+   Utilidades de impresión (reportes)
+   ============================================================ */
+.solo-impresion { display: none; }
+
+@media print {
+  .no-imprimir { display: none !important; }
+  .solo-impresion { display: block; }
+  body { background: var(--blanco); }
+  .tarjeta { box-shadow: none; border: 1px solid var(--gris-300); }
+}
+
+.pie-pagina {
+  text-align: center;
+  color: var(--gris-500);
+  font-size: .8rem;
+  padding: var(--espacio-3) 0;
+}
