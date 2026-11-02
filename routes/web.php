@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Alumno\DashboardController as AlumnoDashboardController;
 use App\Http\Controllers\Alumno\JuegoController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RecuperacionController;
 use App\Http\Controllers\Auth\RegistroController;
 use App\Http\Controllers\Profesor\DashboardController as ProfesorDashboardController;
 use App\Http\Controllers\Profesor\VerrityController;
@@ -23,6 +24,15 @@ Route::post('/logout', [LoginController::class, 'salir'])->middleware('auth')->n
 // Autorregistro (solo alumnos; ver RegistroController).
 Route::get('/registro', [RegistroController::class, 'mostrar'])->name('registro');
 Route::post('/registro', [RegistroController::class, 'registrar'])->name('registro.crear');
+
+// Recuperar contraseña de profesor por código fijo del sistema (no hay
+// envío de correo real). Ver RecuperacionController.
+Route::prefix('recuperar-profesor')->name('recuperar.profesor.')->group(function () {
+    Route::get('/', [RecuperacionController::class, 'mostrarCodigo'])->name('mostrar');
+    Route::post('/verificar', [RecuperacionController::class, 'verificarCodigo'])->name('verificar');
+    Route::get('/nueva-contrasena', [RecuperacionController::class, 'mostrarNuevaContrasena'])->name('nueva');
+    Route::post('/nueva-contrasena', [RecuperacionController::class, 'guardarNuevaContrasena'])->name('guardar');
+});
 
 // Voz de Verrity (Piper TTS local, con fallback a Web Speech API en el navegador).
 Route::get('/voz', [VozController::class, 'sintetizar'])->middleware('auth')->name('voz.sintetizar');

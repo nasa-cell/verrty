@@ -33,6 +33,10 @@
             <button type="submit" class="btn btn-bloque">Iniciar sesión</button>
         </form>
 
+        <div style="text-align:center;margin-top:10px;">
+            <a href="{{ route('recuperar.profesor.mostrar') }}" style="font-size:.85rem;">¿Sos profesor y olvidaste tu contraseña?</a>
+        </div>
+
         <a href="{{ route('registro') }}" class="btn btn-secundario btn-bloque" style="margin-top:10px;">
             🎓 Registrarme como alumno
         </a>
